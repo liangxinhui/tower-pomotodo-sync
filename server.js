@@ -73,7 +73,7 @@ app.get('/addtask', function(req, res){
     }
     else
     {
-      console.log('add task err:' + task);
+      console.log('add task ok:' + task);
       res.send('add task ok:' + task);
     }
    });
