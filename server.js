@@ -35,6 +35,7 @@ app.post('/towerhookhandler', jsonParser, function(req, res){
   }
   task += ' ' + taskTitle;
   console.log(action + ' : ' + taskUser+ ' : '+ task );
+  console.log('taskUser:'+taskUser +　', TOWER_USERNAME:' + TOWER_USERNAME + '  eq:' + (taskUser == TOWER_USERNAME))
   if((action == 'created' || action=='assigned')&& taskUser == TOWER_USERNAME)
   {
    pmto.addtask(task,function(err, task){
