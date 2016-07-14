@@ -4,8 +4,6 @@ var pmto = require("./pomotodo-sync");
 var app = express(); 
 // create application/json parser
 var jsonParser = bodyParser.json()
-// create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 app.use(jsonParser);
 
@@ -15,6 +13,7 @@ var pmtoCfg = {
 };
 pmto.config(pmtoCfg);
 
+var TOWER_USERNAME = process.env.TOWER_USERNAME;
 
 app.post('/towerhookhandler', jsonParser, function(req, res){ 
   res.send('add'); 
@@ -36,7 +35,7 @@ app.post('/towerhookhandler', jsonParser, function(req, res){
   }
   task += ' ' + taskTitle;
   console.log(action + ' : ' + taskUser+ ' : '+ task );
-  if((action == 'created' || action=='assigned')&& taskUser == 'liangxh_test')
+  if((action == 'created' || action=='assigned')&& taskUser == TOWER_USERNAME)
   {
    pmto.addtask(task,function(err, task){
     if(err)
@@ -53,21 +52,31 @@ app.post('/towerhookhandler', jsonParser, function(req, res){
 }); 
 
 
-app.post('/add', jsonParser, function(req, res){ 
-  pmto.addtask(req.body.task,function(err, task){
+app.get('/', function(req, res){ 
+  res.send('hello'); 
+}); 
+
+
+app.get('/addtask', function(req, res){ 
+  
+  var task = req.query.task;
+  if(!task)
+  {
+    res.send('task not given'); 
+    return;
+  }
+     pmto.addtask(task,function(err, task){
     if(err)
     {
-      res.send('add task err:' + err);
+      console.log('add task err:' + err);
+      res.send('add task err:' + err); 
     }
     else
     {
+      console.log('add task err:' + task);
       res.send('add task ok:' + task);
     }
-  })
-}); 
-
-app.get('/', function(req, res){ 
-  res.send('hello'); 
+   });
 }); 
 
 var myPort = process.env.PORT || 3001;
