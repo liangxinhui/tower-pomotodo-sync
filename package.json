@@ -1,0 +1,14 @@
+{
+  "name": "pomotodo_sync",
+  "version": "0.0.1",
+  "private": true,
+  "author": {
+    "name": "liang_xinhui",
+    "email": "liangxinhui@qq.com"
+  },
+  "dependencies": {
+    "express": "~4.9.0",
+    "request": "~2.73.0",
+    "body-parser": "*"
+  }
+}
