@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var pmto = require("./pomotodo-sync");
+var fs = require("fs");
 var app = express(); 
 // create application/json parser
 var jsonParser = bodyParser.json()
@@ -15,6 +16,18 @@ pmto.config(pmtoCfg);
 
 var TOWER_USERNAME = process.env.TOWER_USERNAME;
 
+
+var appConfig = null;
+fs.readFile(__dirname + '/config.json', function(err, fileContent){  
+  if (err) {
+    console.log('Read config Error: ' + err);
+  } else {
+    appConfig = JSON.parse(fileContent);
+  }
+});
+
+
+
 app.post('/towerhookhandler', jsonParser, function(req, res){ 
   res.send('add'); 
   //console.log(req.body)
@@ -28,6 +41,9 @@ app.post('/towerhookhandler', jsonParser, function(req, res){
   {
     taskUser = data.todo.assignee.nickname
   };
+  projectName = TowerNameMapping('project',projectName);
+  todolistName = TowerNameMapping('tasklist',todolistName);
+
   var task = '#' + projectName;
   if(todolistName != "未归类任务")
   {
@@ -79,6 +95,19 @@ app.get('/addtask', function(req, res){
     }
    });
 }); 
+
+
+// NameMapping
+var TowerNameMapping = function(nametype, raw_name){
+  if(appConfig && appConfig['tower_name_mapping']){
+    if(appConfig['tower_name_mapping'][nametype]){
+      if(appConfig['tower_name_mapping'][nametype][raw_name]){
+        return appConfig['tower_name_mapping'][nametype][raw_name];
+      }      
+    }
+  }
+  return raw_name;
+}
 
 var myPort = process.env.PORT || 3001;
 

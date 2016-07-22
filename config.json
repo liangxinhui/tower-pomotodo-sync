@@ -1,0 +1,11 @@
+{
+	"tower_name_mapping":
+	{
+		"project":{
+			"HKEX-OMDD行情网关":"OMDD-GW"
+		},
+		"tasklist":{
+			"tower-pomotodo-sync":"tower-pmtd-sync"
+		}
+	}
+}
