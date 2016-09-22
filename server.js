@@ -9,8 +9,7 @@ var jsonParser = bodyParser.json()
 app.use(jsonParser);
 
 var pmtoCfg = {
-  'username':process.env.POMOTODO_USERNAME,
-  'password':process.env.POMOTODO_PASSWORD
+  'token':process.env.POMOTODO_TOKEN
 };
 pmto.config(pmtoCfg);
 

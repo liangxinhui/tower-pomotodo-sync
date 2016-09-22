@@ -15,8 +15,7 @@
 环境变量：
 
 - TOWER_USERNAME ： 用于过滤Tower中的昵称（不止自己的任务，不添加）
-- POMOTODO_USERNAME ：pomotodo用户名
-- POMOTODO_PASSWORD ：pomotodo密码
+- POMOTODO_TOKEN ：pomotodo Token（高级版功能）
 
 # 使用方法
 
