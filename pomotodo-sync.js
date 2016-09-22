@@ -25,6 +25,7 @@ function AddTask (task, callback)
             "description": task
         }//end of body
     };// end of options
+	console.log('task:'+task)
     request(options, function (error, response, body) {
       if (error) {
           callback(error, task);
